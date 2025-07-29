@@ -1,8 +1,10 @@
 pandas
 numpy
 scikit-learn
+matplotlib
+seaborn
 joblib
 streamlit
-plotly
-dash
-flask
+folium
+streamlit-folium
+jupyter
