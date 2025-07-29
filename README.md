@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Air Quality Prediction System
 
 This project predicts AQI for Indian cities using machine learning and visualizes it on an interactive dashboard similar to [CPCB AQI India](https://airquality.cpcb.gov.in/AQI_India/).
@@ -86,3 +87,7 @@ air_quality_project/
 ├── README.md
 ├── .gitignore
 └── run.py
+=======
+# air_quality_project
+AIR QUALITY PREDICTION
+>>>>>>> fafa0bd4b1c6474f1840ad24462b21f048cc885b
