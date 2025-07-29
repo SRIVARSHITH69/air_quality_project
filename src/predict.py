@@ -1,33 +1,20 @@
 # src/predict.py
-
 import pandas as pd
 import joblib
 
 def load_model(model_path='models/air_quality_model.pkl'):
-    model = joblib.load(model_path)
-    return model
+    bundle = joblib.load(model_path)
+    model = bundle["model"]
+    features = bundle["features"]
+    return model, features
 
-def make_prediction(model, input_data: dict):
-    """
-    input_data: dict with keys: CO, NH3, NO2, OZONE, PM10, SO2
-    Example:
-      {
-        "CO": 0.5,
-        "NH3": 10,
-        "NO2": 30,
-        "OZONE": 40,
-        "PM10": 80,
-        "SO2": 5
-      }
-    """
+def make_prediction(model, features, input_data):
     df = pd.DataFrame([input_data])
-    prediction = model.predict(df)[0]
-    return prediction
+    df = df[features]  # Reorder columns
+    return model.predict(df)[0]
 
 if __name__ == "__main__":
-    # Example usage
-    model = load_model()
-
+    model, features = load_model()
     sample_input = {
         "CO": 0.5,
         "NH3": 10,
@@ -36,6 +23,4 @@ if __name__ == "__main__":
         "PM10": 80,
         "SO2": 5
     }
-
-    predicted_pm25 = make_prediction(model, sample_input)
-    print(f"✅ Predicted PM2.5: {predicted_pm25:.2f}")
+    print("✅ Predicted PM2.5:", make_prediction(model, features, sample_input))

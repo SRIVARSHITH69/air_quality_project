@@ -4,7 +4,7 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error, r2_score
-import joblib
+import pickle  # ✅ Use pickle to match your load_model()
 
 from src.data_preprocessing import load_data, clean_data, save_clean_data
 
@@ -44,9 +44,11 @@ def train():
     print(f"📊 MSE: {mse:.2f}")
     print(f"📈 R2 Score: {r2:.2f}")
 
-    # 8️⃣ Save model
-    joblib.dump(model, 'models/air_quality_model.pkl')
-    print("✅ Model saved to models/air_quality_model.pkl")
+    # 8️⃣ Save model using pickle with correct key 'model'
+    with open('models/air_quality_model.pkl', 'wb') as f:
+        pickle.dump({"model": model, "features": FEATURES}, f)
+
+    print("✅ Model + features saved to models/air_quality_model.pkl")
 
 if __name__ == "__main__":
     train()

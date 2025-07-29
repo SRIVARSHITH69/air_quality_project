@@ -1,11 +1,15 @@
 # src/app.py
+
+# src/app.py
+
 import folium
 import streamlit as st
 from predict import load_model, make_prediction
 from aqi_calculator import calculate_aqi
 from stations import get_station_data
-from folium.plugins import MarkerCluster, Search
+from folium.plugins import MarkerCluster
 from streamlit_folium import st_folium
+
 
 
 def create_aqi_map(df):
@@ -57,32 +61,22 @@ def create_aqi_map(df):
             fill_opacity=0.8
         ).add_to(marker_cluster)
 
-    # Search bar (no button)
-    Search(
-        layer=marker_cluster,
-        geom_type='Point',
-        placeholder='Search city...',
-        search_label='City',
-        collapsed=False,
-        search_button=False
-    ).add_to(m)
-
-    # AQI Legend (right side, dark background)
+    # ✅ Smaller, shifted AQI Legend — no search bar
     legend_html = """
      <div style="
          position: fixed;
          top: 100px;
-         right: 30px;
-         width: 220px;
-         height: 180px;
+         right: 20px;
+         width: 180px;
+         height: auto;
          border: 2px solid #ccc;
-         z-index:9999;
-         font-size:14px;
+         z-index: 9999;
+         font-size: 12px;
          background: black;
          color: white;
-         padding: 15px;
-         line-height: 1.6;
-         border-radius: 10px;
+         padding: 10px;
+         line-height: 1.4;
+         border-radius: 8px;
      ">
          <b>AQI Legend</b><br>
          <i style="background:green; width:10px; height:10px; display:inline-block;"></i> Good (0–50)<br>
@@ -129,10 +123,12 @@ def main():
         "SO2": so2
     }
 
-    model = load_model()
+    # ✅ Load both model + features
+    model, features = load_model()
 
     if st.button("🌟 Predict Now"):
-        predicted_pm25 = make_prediction(model, input_data)
+        # ✅ Correct usage with 3 args
+        predicted_pm25 = make_prediction(model, features, input_data)
 
         concentrations = {
             "PM2.5": predicted_pm25,
@@ -179,7 +175,7 @@ def main():
     st.dataframe(df, use_container_width=True)
 
     # -------------------------------
-    # 🗺️ AQI Map — Clustered with Legend & Search
+    # 🗺️ AQI Map — Clustered with Legend
     # -------------------------------
     st.subheader("🗺️ Air Quality Monitoring Stations")
 
@@ -197,4 +193,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
