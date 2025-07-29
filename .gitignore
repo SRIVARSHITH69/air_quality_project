@@ -1,53 +1,8 @@
-__pycache__/
-*.pyc
+# Ignore all .pkl files except this one
 *.pkl
-*.joblib
-.env
-*.ipynb_checkpoints
-data/processed/
-models/
+!models/air_quality_model.pkl
 
+# Ignore the models folder except this file
+models/*
+!models/air_quality_model.pkl
 
-# Python
-*.pyc
-__pycache__/
-*.pyo
-*.pyd
-*.swp
-*.bak
-
-# Virtual environments
-venv/
-.venv/
-env/
-ENV/
-env.bak/
-.idea/
-.vscode/
-
-# Jupyter Notebook checkpoints
-.ipynb_checkpoints
-
-# OS files
-.DS_Store
-Thumbs.db
-
-# VSCode
-.vscode/
-
-# Logs
-*.log
-
-# Models & data (if you don’t want to push them)
-# If you DO want versioned models/data, comment these out.
-models/
-data/
-
-# Streamlit secrets
-.streamlit/secrets.toml
-
-# Pytest cache
-.pytest_cache/
-
-# Environment files
-.env
