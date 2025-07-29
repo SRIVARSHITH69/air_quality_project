@@ -1,10 +1,9 @@
 # src/app.py
-
+import folium
 import streamlit as st
 from predict import load_model, make_prediction
 from aqi_calculator import calculate_aqi
 from stations import get_station_data
-import folium
 from folium.plugins import MarkerCluster, Search
 from streamlit_folium import st_folium
 
