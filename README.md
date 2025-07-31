@@ -1,70 +1,90 @@
-<<<<<<< HEAD
-# Air Quality Prediction System
-
-This project predicts AQI for Indian cities using machine learning and visualizes it on an interactive dashboard similar to [CPCB AQI India](https://airquality.cpcb.gov.in/AQI_India/).
-
-## 📂 Project Structure
-
-- **data/**: Raw, processed, and external datasets
-- **notebooks/**: Jupyter notebooks for EDA, modeling, evaluation
-- **src/**: Python modules for data prep, model training, AQI calculation, dashboard app
-- **models/**: Trained ML models
-- **static/** and **templates/**: For web app styling (if using Flask)
-- **run.py**: Entrypoint to run the app
-
-## 🚀 How to Run
-
-```bash
-pip install -r requirements.txt
-
-python src/train_model.py
-python run.py
-
-
+# 🌍 Air Quality Prediction & Monitoring Dashboard
 
 ---
 
+📌 Project Objective
 
-Open `air_quality_project\src\data_preprocessing.py` and paste:
+This project aims to develop a robust **Air Quality Monitoring System** that can:
 
-```python
-import pandas as pd
+- ✅ Predict **PM2.5** concentration based on key pollutant levels (Regression task).
+- ✅ Calculate the **Air Quality Index (AQI)** dynamically.
+- ✅ Visualize air quality stations across India on an **interactive map** similar to [CPCB AQI India](https://airquality.cpcb.gov.in/AQI_India/).
 
-def load_data(filepath: str) -> pd.DataFrame:
-    return pd.read_csv(filepath)
-
-def clean_data(df: pd.DataFrame) -> pd.DataFrame:
-    df['last_update'] = pd.to_datetime(df['last_update'], dayfirst=True, errors='coerce')
-    df = df.dropna(subset=['last_update'])
-    pivot_df = df.pivot_table(
-        index=['country', 'state', 'city', 'station', 'latitude', 'longitude', 'last_update'],
-        columns='pollutant_id',
-        values='pollutant_avg'
-    ).reset_index()
-    pivot_df = pivot_df.dropna()
-    return pivot_df
-
-def save_clean_data(df: pd.DataFrame, output_path: str):
-    df.to_csv(output_path, index=False)
-
-
-# 🌍 Air Quality Prediction Dashboard
-
-**A Streamlit web app to predict PM2.5 levels, calculate AQI, and visualize real-time air quality across India.**
+The goal is to empower citizens, researchers, and authorities with real-time, interpretable air quality data.
 
 ---
 
-## 🚀 Features
+🧠 Models Built
 
-- **📈 Predict PM2.5** based on user input for major pollutants.
-- **🎨 Dynamic AQI calculation** with color-coded category display.
-- **🗺️ Interactive map** with clustered air quality stations using Folium.
-- **📍 Real-time & fallback data** for Indian cities.
-- **🔍 Search & AQI legend** for easy exploration.
+**Regression Model**
+
+- **Goal:** Predict PM2.5 levels using inputs like CO, NO2, SO2, NH3, OZONE, PM10.
+- **Algorithm:** Random Forest Regressor with hyperparameter tuning.
+- **Performance (example):**
+  - RMSE: 18.45
+  - MAE: 12.32
+  - R² Score: 0.87
 
 ---
 
-## 📂 Project Structure
+🗂️ Dataset Description
+
+The dataset combines **CPCB**, **OpenAQ**, and fallback mock station data for Indian cities.  
+Features include:
+
+- Pollutants: **CO**, **NO2**, **SO2**, **NH3**, **OZONE**, **PM10**
+- Target: **PM2.5**
+- Geolocation: **Latitude**, **Longitude**, **City**
+- Timestamps: **last_update**
+
+---
+
+📊 Methodology
+
+**Data Preprocessing**
+
+- Null value handling
+- Pivot table to get wide format
+- Feature engineering & standardization
+
+**Exploratory Data Analysis (EDA)**
+
+- Correlation heatmaps
+- Distributions of pollutant levels
+- Time trends of PM2.5
+
+**Model Training**
+
+- Train-Test split (80-20)
+- Random Forest with `GridSearchCV` or `RandomizedSearchCV`
+- Evaluation using RMSE, MAE, R²
+
+---
+
+🚀 Live Deployment
+
+The full dashboard is built with **Streamlit** and can be deployed on **Render** or **Streamlit Cloud**.
+
+Features:
+- 📈 Predict PM2.5 for custom inputs
+- 🎨 Color-coded AQI output block
+- 🗺️ Interactive Folium map with **marker clustering**, **search bar**, **legend**
+
+---
+
+🛠️ Tech Stack
+
+- **Python**
+- **Pandas, NumPy**
+- **Scikit-learn**
+- **Streamlit**
+- **Folium**, **Streamlit-Folium**
+- **Matplotlib**, **Seaborn**
+- **Render** (for deployment)
+
+---
+
+📁 Project Structure
 
 ```plaintext
 air_quality_project/
@@ -87,7 +107,3 @@ air_quality_project/
 ├── README.md
 ├── .gitignore
 └── run.py
-=======
-# air_quality_project
-AIR QUALITY PREDICTION
->>>>>>> fafa0bd4b1c6474f1840ad24462b21f048cc885b
